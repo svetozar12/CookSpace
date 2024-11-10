@@ -5,13 +5,15 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './services/auth/auth.module';
 import { User } from './entities/user.entity';
+import { Recipe } from './entities/recipe.entity';
+import { Comment } from './entities/comment.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      entities: [User],
+      entities: [User, Recipe, Comment],
       synchronize: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({

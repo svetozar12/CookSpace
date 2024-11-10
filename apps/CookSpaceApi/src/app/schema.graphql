@@ -21,7 +21,6 @@ type ConfirmTwoFA {
 
 type User {
   id: Int!
-  username: String!
   name: String!
   email: String!
   recipes: [Recipe!]!
@@ -48,7 +47,7 @@ type Comment {
   id: Int!
   content: String!
   author: User!
-  recipe: Recipe!
+  recipes: [Recipe]!
   createdAt: String!
 }
 
