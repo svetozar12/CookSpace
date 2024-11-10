@@ -1,0 +1,26 @@
+{
+  "name": "CookSpaceApi",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/CookSpaceApi/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "CookSpaceApi:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "CookSpaceApi:build:development"
+        },
+        "production": {
+          "buildTarget": "CookSpaceApi:build:production"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+mutation enable2FA {
+  enable2FA {
+    ... on TwoFA {
+      otpauth
+    }
+    ... on InternalServerError {
+      message
+      status
+      details
+    }
+  }
+}

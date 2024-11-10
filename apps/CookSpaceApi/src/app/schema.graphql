@@ -1,0 +1,131 @@
+# Error and Auth Types
+
+type InternalServerError {
+  message: String!
+  status: Int
+  details: [String]
+}
+
+type JWT {
+  accessToken: String!
+  refreshToken: String!
+}
+
+type Message {
+  data: String!
+}
+
+type ConfirmTwoFA {
+  backupCodes: [String!]!
+}
+
+type User {
+  id: Int!
+  username: String!
+  name: String!
+  email: String!
+  recipes: [Recipe!]!
+  likedRecipes: [Recipe!]!
+  comments: [Comment!]!
+}
+
+type Recipe {
+  id: Int!
+  title: String!
+  description: String!
+  ingredients: [String!]!
+  steps: [String!]!
+  cookingTime: Int!
+  tags: [String!]!
+  author: User!
+  likes: Int!
+  likedBy: [User!]!
+  comments: [Comment!]!
+  createdAt: String!
+}
+
+type Comment {
+  id: Int!
+  content: String!
+  author: User!
+  recipe: Recipe!
+  createdAt: String!
+}
+
+# Union Types
+
+union UserResult = User | InternalServerError
+union AuthResult = JWT | InternalServerError
+union MessageResult = Message | InternalServerError
+
+# Input Types
+
+input LoginInput {
+  credentials: LoginCredentialsInput
+  refreshToken: String
+}
+
+input LoginCredentialsInput {
+  email: String!
+  password: String!
+}
+
+input RegisterInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+input RecipeInput {
+  title: String!
+  description: String!
+  ingredients: [String!]!
+  steps: [String!]!
+  cookingTime: Int!
+  tags: [String!]
+}
+
+input CommentInput {
+  recipeId: Int!
+  content: String!
+}
+
+# Queries
+
+type Query {
+  profile: UserResult!
+  # Fetch all recipes with optional filtering by tag and pagination
+  recipes(tag: String, skip: Int, take: Int): [Recipe!]!
+
+  # Fetch a single recipe by its ID
+  recipe(id: Int!): Recipe
+
+  # Fetch recipes by the logged-in user (useful for profile page)
+  myRecipes: [Recipe!]!
+}
+
+# Mutations
+
+type Mutation {
+  login(input: LoginInput!): AuthResult!
+  register(input: RegisterInput!): AuthResult!
+  deleteProfile: MessageResult!
+
+  # Add a new recipe (requires authentication)
+  addRecipe(input: RecipeInput!): Recipe!
+
+  # Update an existing recipe by ID (requires authentication and ownership)
+  updateRecipe(id: Int!, input: RecipeInput!): Recipe!
+
+  # Delete a recipe by ID (requires authentication and ownership)
+  deleteRecipe(id: Int!): Boolean!
+
+  # Add a like to a recipe (requires authentication)
+  likeRecipe(recipeId: Int!): Recipe!
+
+  # Add a comment to a recipe (requires authentication)
+  addComment(input: CommentInput!): Comment!
+
+  # Delete a comment by ID (requires authentication and ownership)
+  deleteComment(id: Int!): Boolean!
+}
