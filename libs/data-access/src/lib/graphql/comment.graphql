@@ -1,0 +1,35 @@
+mutation addComment($input: CommentInput!) {
+  addComment(input: $input) {
+    ... on Comment {
+      id
+      content
+      createdAt
+      author {
+        id
+        name
+      }
+      recipes {
+        id
+        title
+      }
+    }
+    ... on InternalServerError {
+      message
+      status
+      details
+    }
+  }
+}
+
+mutation deleteComment($id: Int!) {
+  deleteComment(id: $id) {
+    ... on Message {
+      data
+    }
+    ... on InternalServerError {
+      message
+      status
+      details
+    }
+  }
+}

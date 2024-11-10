@@ -1,4 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { User as UserGql } from '@apps/CookSpaceApi/src/graphql';
 import { Recipe } from './recipe.entity';
 import { Comment } from './comment.entity';
@@ -20,7 +26,7 @@ export class User extends UserGql {
   @OneToMany(() => Recipe, (recipe) => recipe.author)
   recipes: Recipe[];
 
-  @OneToMany(() => Recipe, (recipe) => recipe.likedBy)
+  @ManyToMany(() => Recipe, (recipe) => recipe.likedBy)
   likedRecipes: Recipe[];
 
   @OneToMany(() => Comment, (comment) => comment.author)

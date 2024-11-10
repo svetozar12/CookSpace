@@ -96,10 +96,10 @@ input CommentInput {
 type Query {
   profile: UserResult!
   # Fetch all recipes with optional filtering by tag and pagination
-  recipes(tag: String, skip: Int, take: Int): [Recipe!]!
+  recipes(tag: String, skip: Int, take: Int): [Recipe]!
 
   # Fetch a single recipe by its ID
-  recipe(id: Int!): Recipe
+  recipe(id: Int!): RecipeResult
 }
 
 # Mutations
@@ -122,7 +122,7 @@ type Mutation {
   likeRecipe(recipeId: Int!): RecipeResult!
 
   # Add a comment to a recipe (requires authentication)
-  addComment(input: CommentInput!): Comment!
+  addComment(input: CommentInput!): CommentResult!
 
   # Delete a comment by ID (requires authentication and ownership)
   deleteComment(id: Int!): MessageResult!

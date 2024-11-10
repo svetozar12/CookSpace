@@ -1,0 +1,40 @@
+query profile {
+  profile {
+    ... on User {
+      id
+      name
+      email
+      recipes {
+        id
+        title
+        description
+      }
+      likedRecipes {
+        id
+        title
+      }
+      comments {
+        id
+        content
+      }
+    }
+    ... on InternalServerError {
+      message
+      status
+      details
+    }
+  }
+}
+
+mutation deleteProfile {
+  deleteProfile {
+    ... on Message {
+      data
+    }
+    ... on InternalServerError {
+      message
+      status
+      details
+    }
+  }
+}

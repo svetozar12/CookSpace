@@ -68,7 +68,7 @@ export class RecipeService {
     context: { req: { user: User } }
   ): Promise<Recipe> {
     let recipe = await this.recipeRepository.findOne({
-      where: { id, title: input.title, authorId: context.req.user.id },
+      where: { id, title: input.title, author: { id: context.req.user.id } },
     });
     if (recipe) {
       throw new ConflictException('Recipe already exists');
@@ -87,7 +87,7 @@ export class RecipeService {
     context: { req: { user: User } }
   ): Promise<Message> {
     const recipe = await this.recipeRepository.findOne({
-      where: { id, authorId: context.req.user.id },
+      where: { id, author: { id: context.req.user.id } },
     });
     if (recipe) {
       throw new ConflictException('Recipe already exists');

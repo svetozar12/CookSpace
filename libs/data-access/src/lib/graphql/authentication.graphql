@@ -1,0 +1,27 @@
+mutation login($input: LoginInput!) {
+  login(input: $input) {
+    ... on JWT {
+      accessToken
+      refreshToken
+    }
+    ... on InternalServerError {
+      message
+      status
+      details
+    }
+  }
+}
+
+mutation register($input: RegisterInput!) {
+  register(input: $input) {
+    ... on JWT {
+      accessToken
+      refreshToken
+    }
+    ... on InternalServerError {
+      message
+      status
+      details
+    }
+  }
+}

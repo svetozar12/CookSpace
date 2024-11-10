@@ -1,0 +1,130 @@
+query recipes($tag: String, $skip: Int, $take: Int) {
+  recipes(tag: $tag, skip: $skip, take: $take) {
+    id
+    title
+    description
+    ingredients
+    steps
+    cookingTime
+    tags
+    likes
+    createdAt
+    author {
+      id
+      name
+    }
+    likedBy {
+      id
+      name
+    }
+    comments {
+      id
+      content
+    }
+  }
+}
+
+query recipe($id: Int!) {
+  recipe(id: $id) {
+    ... on Recipe {
+      id
+      title
+      description
+      ingredients
+      steps
+      cookingTime
+      tags
+      likes
+      createdAt
+      author {
+        id
+        name
+      }
+      likedBy {
+        id
+        name
+      }
+      comments {
+        id
+        content
+      }
+    }
+    ... on InternalServerError {
+      message
+      status
+      details
+    }
+  }
+}
+
+mutation addRecipe($input: RecipeInput!) {
+  addRecipe(input: $input) {
+    ... on Recipe {
+      id
+      title
+      description
+      ingredients
+      steps
+      cookingTime
+      tags
+      createdAt
+    }
+    ... on InternalServerError {
+      message
+      status
+      details
+    }
+  }
+}
+
+mutation updateRecipe($id: Int!, $input: RecipeInput!) {
+  updateRecipe(id: $id, input: $input) {
+    ... on Recipe {
+      id
+      title
+      description
+      ingredients
+      steps
+      cookingTime
+      tags
+      createdAt
+    }
+    ... on InternalServerError {
+      message
+      status
+      details
+    }
+  }
+}
+
+mutation deleteRecipe($id: Int!) {
+  deleteRecipe(id: $id) {
+    ... on Message {
+      data
+    }
+    ... on InternalServerError {
+      message
+      status
+      details
+    }
+  }
+}
+
+mutation likeRecipe($recipeId: Int!) {
+  likeRecipe(recipeId: $recipeId) {
+    ... on Recipe {
+      id
+      title
+      likes
+      likedBy {
+        id
+        name
+      }
+    }
+    ... on InternalServerError {
+      message
+      status
+      details
+    }
+  }
+}

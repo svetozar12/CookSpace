@@ -1,4 +1,11 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Recipe as RecipeGql } from '@apps/CookSpaceApi/src/graphql';
 import { User } from './user.entity';
 import { Comment } from './comment.entity';
@@ -26,21 +33,20 @@ export class Recipe extends RecipeGql {
   @Column('text', { array: true })
   tags: string[];
 
-  @Column({ type: 'integer' })
-  authorId: number;
-
   @Column({ type: 'integer', default: 0 })
   likes: number;
 
   @ManyToMany(() => User, (user) => user.likedRecipes)
+  @JoinTable()
   likedBy: User[];
 
   @ManyToMany(() => Comment, (comment) => comment)
+  @JoinTable()
   comments: Comment[];
 
   @Column({ type: 'varchar' })
   createdAt: string;
 
-  @ManyToMany(() => User, (user) => user.recipes)
+  @ManyToOne(() => User, (user) => user.recipes)
   author: User;
 }
