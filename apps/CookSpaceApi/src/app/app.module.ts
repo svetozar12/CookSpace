@@ -7,6 +7,7 @@ import { AuthModule } from './services/auth/auth.module';
 import { User } from './entities/user.entity';
 import { Recipe } from './entities/recipe.entity';
 import { Comment } from './entities/comment.entity';
+import { RecipeModule } from './services/recipe/recipe.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { Comment } from './entities/comment.entity';
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     AuthModule,
+    RecipeModule,
   ],
 })
 export class AppModule {}

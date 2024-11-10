@@ -29,7 +29,7 @@ export class Recipe extends RecipeGql {
   @Column({ type: 'integer' })
   authorId: number;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'integer', default: 0 })
   likes: number;
 
   @ManyToMany(() => User, (user) => user.likedRecipes)
