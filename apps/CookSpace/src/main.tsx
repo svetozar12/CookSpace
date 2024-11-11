@@ -29,7 +29,7 @@ function getCookieValue(name: string) {
 const authLink = setContext((_, { headers }) => {
   // Get the token from local storage or any other secure place
   const token = getCookieValue('accessToken');
-
+  console.log(token);
   // Return the headers with the Authorization token if it exists
   return {
     headers: {
@@ -40,7 +40,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 // Combine authLink and httpLink
-const client = new ApolloClient({
+export const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });

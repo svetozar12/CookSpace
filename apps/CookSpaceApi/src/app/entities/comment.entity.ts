@@ -1,4 +1,10 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Comment as CommentGql } from '@apps/CookSpaceApi/src/graphql';
 import { User } from './user.entity';
 import { Recipe } from './recipe.entity';
@@ -11,7 +17,7 @@ export class Comment extends CommentGql {
   @Column({ type: 'varchar' })
   content: string;
 
-  @OneToOne(() => User, (user) => user.comments)
+  @ManyToOne(() => User, (user) => user.comments)
   author: User;
 
   @OneToOne(() => User, (user) => user.recipes)

@@ -9,8 +9,9 @@ const Recipes = () => {
 
   return (
     <div>
+      Recipes
       {data.recipes.map((recipe) => (
-        <div key={recipe.id}>{recipe.title}</div>
+        <div key={recipe?.id}>{recipe?.title}</div>
       ))}
     </div>
   );

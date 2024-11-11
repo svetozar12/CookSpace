@@ -5,8 +5,13 @@ import {
 } from '@cook-space/data-access';
 import { Formik } from 'formik';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
-  const [_, setCookie, removeCookie] = useCookies(['accessToken']);
+  const navigate = useNavigate();
+  const [_, setCookie, removeCookie] = useCookies([
+    'accessToken',
+    'refreshToken',
+  ]);
   const [login] = useLoginMutation({
     onCompleted(data, clientOptions) {
       if (data.login.__typename !== 'JWT') {
@@ -14,6 +19,8 @@ const Login = () => {
         return;
       }
       setCookie('accessToken', data.login.accessToken);
+      setCookie('refreshToken', data.login.refreshToken);
+      navigate('/login');
     },
   });
 

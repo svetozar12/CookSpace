@@ -23,23 +23,23 @@ type User {
   id: Int!
   name: String!
   email: String!
-  recipes: [Recipe!]!
-  likedRecipes: [Recipe!]!
-  comments: [Comment!]!
+  recipes: [Recipe]!
+  likedRecipes: [Recipe]!
+  comments: [Comment]!
 }
 
 type Recipe {
   id: Int!
   title: String!
   description: String!
-  ingredients: [String!]!
-  steps: [String!]!
+  ingredients: [String]!
+  steps: [String]!
   cookingTime: Int!
-  tags: [String!]!
+  tags: [String]!
   author: User!
   likes: Int!
-  likedBy: [User!]!
-  comments: [Comment!]!
+  likedBy: [User]!
+  comments: [Comment]!
   createdAt: String!
 }
 

@@ -21,7 +21,10 @@ export class AuthService {
     email: string,
     pass: string
   ): Promise<Omit<User, 'password'>> {
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this.userRepository.findOne({
+      where: { email },
+      relations: ['recipes', 'likedRecipes', 'comments'],
+    });
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -35,8 +38,9 @@ export class AuthService {
   async validateUserById(id: number): Promise<Omit<User, 'password'>> {
     const user = await this.userRepository.findOne({
       where: { id },
+      relations: ['recipes', 'likedRecipes', 'comments'],
     });
-
+    console.log(user);
     const { password: _password, ...result } = user;
 
     return result;
