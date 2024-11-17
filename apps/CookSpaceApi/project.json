@@ -21,6 +21,13 @@
           "buildTarget": "CookSpaceApi:build:production"
         }
       }
+    },
+    "generate-typing": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/CookSpaceApi/src",
+        "command": "npx tsx generate-typings"
+      }
     }
   }
 }

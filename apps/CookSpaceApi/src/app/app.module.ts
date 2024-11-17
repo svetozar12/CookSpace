@@ -42,7 +42,6 @@ import { RecipeModule } from './services/recipe/recipe.module';
         path: 'apps/CookSpaceApi/src/graphql.ts',
         outputAs: 'class',
         emitTypenameField: true,
-        // skipResolverArgs: true,
       },
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
