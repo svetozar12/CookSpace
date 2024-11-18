@@ -1,35 +1,36 @@
+import { Formik } from 'formik';
 import React from 'react';
 import {
-  LoginCredentialsInput,
-  useLoginMutation,
-} from '@cook-space/data-access';
-import { Formik } from 'formik';
-import { useCookies } from 'react-cookie';
+  RegisterInput,
+  useRegisterMutation,
+} from '../../../../../../libs/data-access/src';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import {
-  TextField,
-  Stack,
-  ITextFieldStyles,
-  PrimaryButton,
-  Text,
   Dialog,
+  ITextFieldStyles,
   Link,
+  PrimaryButton,
+  Stack,
+  Text,
+  TextField,
 } from '@fluentui/react';
-const Login = () => {
+
+const Register = () => {
   const navigate = useNavigate();
   const [_, setCookie, removeCookie] = useCookies([
     'accessToken',
     'refreshToken',
   ]);
-  const [login] = useLoginMutation({
+  const [login] = useRegisterMutation({
     onCompleted(data, clientOptions) {
       console.log(data);
-      if (data.login.__typename !== 'JWT') {
+      if (data.register.__typename !== 'JWT') {
         removeCookie('accessToken');
         return;
       }
-      setCookie('accessToken', data.login.accessToken);
-      setCookie('refreshToken', data.login.refreshToken);
+      setCookie('accessToken', data.register.accessToken);
+      setCookie('refreshToken', data.register.refreshToken);
       navigate('/');
     },
   });
@@ -41,9 +42,9 @@ const Login = () => {
   return (
     <div>
       <Formik
-        initialValues={{ email: '', password: '' }}
-        validate={(values: LoginCredentialsInput) => {
-          const errors: Partial<LoginCredentialsInput> = {};
+        initialValues={{ email: '', password: '', name: '' }}
+        validate={(values: RegisterInput) => {
+          const errors: Partial<RegisterInput> = {};
 
           if (!values.email) {
             errors.email = 'Required';
@@ -58,9 +59,7 @@ const Login = () => {
         onSubmit={(values, { setSubmitting }) => {
           login({
             variables: {
-              input: {
-                credentials: values,
-              },
+              input: values,
             },
           });
         }}
@@ -86,7 +85,7 @@ const Login = () => {
               dialogContentProps={{
                 title: (
                   <Text variant="xLargePlus" style={{ fontWeight: 'bold' }}>
-                    Login
+                    Register
                   </Text>
                 ),
               }}
@@ -103,14 +102,24 @@ const Login = () => {
                 <TextField
                   name="email"
                   type="email"
-                  label="Enter your email"
+                  label="Email"
                   value={values.email}
                   onChange={handleChange}
                   styles={textFieldStyles}
                   errorMessage={(touched.email && errors.email) || ''}
+                  placeholder="Enter your email"
                 />
                 <TextField
-                  label="Enter your password"
+                  label="Name"
+                  name="name"
+                  styles={textFieldStyles}
+                  value={values.name}
+                  onChange={handleChange}
+                  errorMessage={(touched.name && errors.name) || ''}
+                  placeholder="Enter your name"
+                ></TextField>
+                <TextField
+                  label="Password"
                   name="password"
                   type="password"
                   value={values.password}
@@ -119,7 +128,9 @@ const Login = () => {
                   canRevealPassword
                   revealPasswordAriaLabel="Show password"
                   errorMessage={(touched.password && errors.password) || ''}
+                  placeholder="Enter your password"
                 />
+
                 <PrimaryButton
                   primary
                   type="submit"
@@ -127,9 +138,9 @@ const Login = () => {
                   disabled={isSubmitting}
                   style={{ width: 300 }}
                 >
-                  Login
+                  Register
                 </PrimaryButton>
-                <Link href="/register">Don't have an account ?</Link>
+                <Link href="/login">Already have an account</Link>
               </Stack>
             </Dialog>
           </form>
@@ -139,4 +150,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

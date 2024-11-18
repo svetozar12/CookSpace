@@ -3,7 +3,6 @@ import { Navigate } from 'react-router-dom';
 import {
   InternalServerError,
   ProfileDocument,
-  useProfileQuery,
   User,
 } from '../../../../../libs/data-access/src';
 import { client } from '../../main';
@@ -34,7 +33,6 @@ export const ProtectedRoute = ({
       });
   }, []);
 
-  // console.log(error, data);
   if (!cookie.accessToken) {
     return <Navigate to="/login" replace />;
   }
