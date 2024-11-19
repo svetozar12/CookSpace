@@ -1,18 +1,26 @@
 import { Route, Routes, Link } from 'react-router-dom';
 import Login from './components/Login/Login';
-import Recipes from './components/Recipes';
-import { ProtectedRoute } from './utilts/auth';
+import Recipes from './components/Recipes/Recipes';
+import { ProtectedRoute, UnprotectedRoute } from './utilts/auth';
 import Register from './components/Register/Register';
 
 export function App() {
   const routes = [
     {
       path: '/login',
-      element: <Login />,
+      element: (
+        <UnprotectedRoute>
+          <Login />
+        </UnprotectedRoute>
+      ),
     },
     {
       path: '/register',
-      element: <Register />,
+      element: (
+        <UnprotectedRoute>
+          <Register />
+        </UnprotectedRoute>
+      ),
     },
     {
       path: '/',

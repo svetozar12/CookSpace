@@ -8,6 +8,7 @@ import {
 import { client } from '../../main';
 import { useEffect } from 'react';
 
+// Protect routes
 export const ProtectedRoute = ({
   children,
 }: {
@@ -36,5 +37,20 @@ export const ProtectedRoute = ({
   if (!cookie.accessToken) {
     return <Navigate to="/login" replace />;
   }
+  return children;
+};
+
+// Unprotect routes
+export const UnprotectedRoute = ({
+  children,
+}: {
+  children: React.JSX.Element;
+}) => {
+  const [cookie] = useCookies(['accessToken']);
+  useEffect(() => {
+    if (cookie.accessToken) {
+      window.location.href = '/';
+    }
+  }, []);
   return children;
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRecipesQuery } from '../../../../../libs/data-access/src';
+import { useRecipesQuery } from '../../../../../../libs/data-access/src';
 
 const Recipes = () => {
   const { data, loading, error } = useRecipesQuery();
