@@ -8,10 +8,8 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { GraphqlExceptionFilter } from './app/filter/gqlException.filter';
 import { JWTGqlGuard } from '@apps/CookSpaceApi/src/app/guards/jwt.guard';
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
   const port = process.env.PORT || 3000;
   app.enableCors();
   const reflector = app.get(Reflector);

@@ -22,6 +22,7 @@ import { RecipeModule } from './services/recipe/recipe.module';
       introspection: true,
       typePaths: ['./**/*.graphql'],
       playground: false,
+      csrfPrevention: false,
       formatError: (error) => {
         const originalError = error.extensions?.originalError as {
           message: string;

@@ -20,7 +20,7 @@ export class RecipeService {
     take: number
   ): Promise<Recipe[]> {
     const recipes = await this.recipeRepository.find({
-      relations: ['author'],
+      relations: ['author', 'likedBy', 'comments'],
       where: { tags: tag },
       skip,
       take,
@@ -46,7 +46,10 @@ export class RecipeService {
     };
   }
 
-  async addRecipe(input: AddRecipeDTO): Promise<Recipe> {
+  async addRecipe(
+    input: AddRecipeDTO,
+    context: { req: { user: User } }
+  ): Promise<Recipe> {
     let recipe = await this.recipeRepository.findOne({
       where: { title: input.title },
     });
@@ -55,6 +58,9 @@ export class RecipeService {
     }
 
     recipe = this.recipeRepository.create(input);
+    recipe.author = context.req.user;
+    recipe.comments = [];
+    recipe.likedBy = [];
     await this.recipeRepository.save(recipe);
 
     return {

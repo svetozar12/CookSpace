@@ -1,10 +1,12 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Recipe as RecipeGql } from '@apps/CookSpaceApi/src/graphql';
 import { User } from './user.entity';
@@ -44,9 +46,22 @@ export class Recipe extends RecipeGql {
   @JoinTable()
   comments: Comment[];
 
-  @Column({ type: 'varchar' })
-  createdAt: string;
-
   @ManyToOne(() => User, (user) => user.recipes)
   author: User;
+
+  @Column({ type: 'varchar', length: 40 })
+  imageUrl: string;
+
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  public createdAt: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  public updatedAt: Date;
 }

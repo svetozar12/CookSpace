@@ -21,8 +21,11 @@ export class RecipeResolver {
     return this.recipeService.getRecipe(id);
   }
   @Mutation(() => Recipe)
-  addRecipe(@Args('input') input: AddRecipeDTO): Promise<Recipe> {
-    return this.recipeService.addRecipe(input);
+  addRecipe(
+    @Args('input') input: AddRecipeDTO,
+    @Context() context
+  ): Promise<Recipe> {
+    return this.recipeService.addRecipe(input, context);
   }
 
   @Mutation(() => Recipe)

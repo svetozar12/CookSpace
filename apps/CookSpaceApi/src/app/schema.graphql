@@ -1,5 +1,7 @@
 # Error and Auth Types
 
+scalar Date
+
 type InternalServerError {
   message: String!
   status: Int
@@ -40,7 +42,8 @@ type Recipe {
   likes: Int!
   likedBy: [User]!
   comments: [Comment]!
-  createdAt: String!
+  createdAt: Date!
+  imageUrl: String!
 }
 
 type Comment {
@@ -48,7 +51,7 @@ type Comment {
   content: String!
   author: User!
   recipes: [Recipe]!
-  createdAt: String!
+  createdAt: Date!
 }
 
 # Union Types
