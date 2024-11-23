@@ -20,7 +20,7 @@ export function App() {
     {
       path: '/',
       element: <Recipes />,
-      isPublic: false,
+      isPublic: true,
     },
   ];
   return (

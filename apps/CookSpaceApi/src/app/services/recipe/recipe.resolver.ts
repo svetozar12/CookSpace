@@ -3,12 +3,13 @@ import { Message } from '@apps/CookSpaceApi/src/graphql';
 import { AddRecipeDTO } from './dtos/addRecipe.dto';
 import { RecipeService } from './recipe.service';
 import { Recipe } from '../../entities/recipe.entity';
-
+import { Public } from '../../decorators/isPublic';
 @Resolver('Recipe')
 export class RecipeResolver {
   constructor(private readonly recipeService: RecipeService) {}
 
   @Query(() => [Recipe])
+  @Public()
   recipes(
     @Args('tag') tag: string,
     @Args('skip') skip: number
@@ -17,6 +18,7 @@ export class RecipeResolver {
   }
 
   @Query(() => Recipe)
+  @Public()
   recipe(@Args('id') id: number): Promise<Recipe> {
     return this.recipeService.getRecipe(id);
   }

@@ -4,13 +4,14 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 300px;
-  border: 1px solid #ccc;
+  max-width: 285px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .cardContent {
-  padding: 0.75rem;
   width: 100%;
+  box-sizing: border-box;
+  padding: 0.75rem;
 }
 
 .cardContent span,

@@ -52,7 +52,7 @@ export const UnprotectedRoute = ({
 }) => {
   const [cookie] = useCookies(['accessToken']);
   useEffect(() => {
-    if (cookie.accessToken) {
+    if (cookie.accessToken && window.location.pathname === '/login') {
       window.location.href = '/';
     }
   }, []);
