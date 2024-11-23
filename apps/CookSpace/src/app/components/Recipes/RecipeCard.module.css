@@ -1,3 +1,20 @@
 .card {
-  background-color: red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+}
+
+.card span,
+p {
+  text-align: left;
+  width: 100%;
+}
+
+.card span {
+  font-weight: bold;
+  font-size: 1.475rem;
 }

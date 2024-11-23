@@ -28,4 +28,8 @@ export class UpdateRecipeDTO extends RecipeInput {
   @IsString({ each: true })
   @IsOptional()
   tags: string[];
+
+  @IsString()
+  @IsOptional()
+  imageUrl: string;
 }

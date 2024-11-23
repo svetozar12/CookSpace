@@ -40,7 +40,6 @@ export class AuthService {
       where: { id },
       relations: ['recipes', 'likedRecipes', 'comments'],
     });
-    console.log(user);
     const { password: _password, ...result } = user;
 
     return result;

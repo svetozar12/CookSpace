@@ -49,7 +49,7 @@ export class Recipe extends RecipeGql {
   @ManyToOne(() => User, (user) => user.recipes)
   author: User;
 
-  @Column({ type: 'varchar', length: 40 })
+  @Column({ type: 'varchar' })
   imageUrl: string;
 
   @CreateDateColumn({

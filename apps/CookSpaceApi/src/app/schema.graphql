@@ -87,6 +87,7 @@ input RecipeInput {
   steps: [String!]!
   cookingTime: Int!
   tags: [String!]
+  imageUrl: String!
 }
 
 input CommentInput {

@@ -10,11 +10,10 @@ export class LocalGqlGuard extends AuthGuard('local') {
   getRequest(context: ExecutionContext) {
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req;
-
     if (!request.body) request.body = {};
     const args = ctx.getArgs();
+    console.log(request.body, args, 'debug');
     request.body = { ...request.body, ...args };
-
     if (request.body.refreshToken) {
       // Skip the authentication if refreshToken is present
       return null;

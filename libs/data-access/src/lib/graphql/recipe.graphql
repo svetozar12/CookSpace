@@ -8,6 +8,7 @@ query recipes($tag: String, $skip: Int, $take: Int) {
     cookingTime
     tags
     likes
+    imageUrl
     author {
       id
       name
@@ -35,6 +36,7 @@ query recipe($id: Int!) {
       tags
       likes
       createdAt
+      imageUrl
       author {
         id
         name
@@ -67,6 +69,7 @@ mutation addRecipe($input: RecipeInput!) {
       cookingTime
       tags
       createdAt
+      imageUrl
     }
     ... on InternalServerError {
       message
@@ -87,6 +90,7 @@ mutation updateRecipe($id: Int!, $input: RecipeInput!) {
       cookingTime
       tags
       createdAt
+      imageUrl
     }
     ... on InternalServerError {
       message

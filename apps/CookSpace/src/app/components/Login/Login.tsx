@@ -28,8 +28,14 @@ const Login = () => {
         removeCookie('accessToken');
         return;
       }
-      setCookie('accessToken', data.login.accessToken);
-      setCookie('refreshToken', data.login.refreshToken);
+      setCookie('accessToken', data.login.accessToken, {
+        path: '/',
+        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      });
+      setCookie('refreshToken', data.login.refreshToken, {
+        path: '/',
+        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      });
       navigate('/');
     },
   });

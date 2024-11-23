@@ -24,7 +24,6 @@ const Register = () => {
   ]);
   const [login] = useRegisterMutation({
     onCompleted(data, clientOptions) {
-      console.log(data);
       if (data.register.__typename !== 'JWT') {
         removeCookie('accessToken');
         return;

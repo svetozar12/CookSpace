@@ -1,40 +1,37 @@
 import { useCookies } from 'react-cookie';
 import { Navigate } from 'react-router-dom';
-import {
-  InternalServerError,
-  ProfileDocument,
-  User,
-} from '../../../../../libs/data-access/src';
-import { client } from '../../main';
+import { useProfileQuery } from '../../../../../libs/data-access/src';
 import { useEffect } from 'react';
-
+import { Spinner } from '@fluentui/react';
 // Protect routes
 export const ProtectedRoute = ({
   children,
 }: {
   children: React.JSX.Element;
 }) => {
-  const [cookie, _, removeCookie] = useCookies(['accessToken']);
-
-  useEffect(() => {
-    client
-      .query<{ profile: User | InternalServerError }>({
-        query: ProfileDocument,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.profile.__typename === 'InternalServerError') {
-          removeCookie('accessToken');
-        }
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
+  const [cookie, _, removeCookie] = useCookies(['accessToken', 'refreshToken']);
+  const {
+    data: profile,
+    loading,
+    error,
+  } = useProfileQuery({
+    onCompleted(data) {
+      if (data.profile.__typename === 'InternalServerError') {
         removeCookie('accessToken');
-      });
-  }, []);
+        removeCookie('refreshToken');
+      }
+    },
+    onError() {
+      removeCookie('accessToken');
+      removeCookie('refreshToken');
+    },
+  });
 
-  if (!cookie.accessToken) {
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (!cookie.accessToken || error || !profile) {
     return <Navigate to="/login" replace />;
   }
   return children;

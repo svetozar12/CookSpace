@@ -1,46 +1,54 @@
-import { Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Login from './components/Login/Login';
-import Recipes from './components/Recipes/Recipes';
+import Recipes from './components/Recipes/RecipesList';
 import { ProtectedRoute, UnprotectedRoute } from './utilts/auth';
 import Register from './components/Register/Register';
+import Layout from './components/Layout/Layout';
 
 export function App() {
   const routes = [
     {
       path: '/login',
-      element: (
-        <UnprotectedRoute>
-          <Login />
-        </UnprotectedRoute>
-      ),
+      element: <Login />,
+      isPublic: true,
     },
     {
       path: '/register',
-      element: (
-        <UnprotectedRoute>
-          <Register />
-        </UnprotectedRoute>
-      ),
+      element: <Register />,
+      isPublic: true,
     },
     {
       path: '/',
-      element: (
-        <ProtectedRoute>
-          <Recipes />
-        </ProtectedRoute>
-      ),
+      element: <Recipes />,
+      isPublic: false,
     },
   ];
   return (
-    <div>
+    <Layout>
       <Routes>
         {routes.map((route) => {
+          const isPublic = route.isPublic;
+
+          if (isPublic) {
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={<UnprotectedRoute>{route.element}</UnprotectedRoute>}
+              />
+            );
+          }
+
           return (
-            <Route key={route.path} path={route.path} element={route.element} />
+            <Route
+              key={route.path}
+              path={route.path}
+              element={<ProtectedRoute>{route.element}</ProtectedRoute>}
+            />
           );
         })}
       </Routes>
-    </div>
+    </Layout>
   );
 }
 
