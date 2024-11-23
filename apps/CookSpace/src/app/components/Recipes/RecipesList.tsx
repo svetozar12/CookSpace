@@ -12,14 +12,11 @@ const Recipes = () => {
   if (!data) return <div>No data</div>;
 
   return (
-    <div>
-      Recipes
-      <div className={styles.cardContainer}>
-        {data.recipes.map((recipe) => {
-          if (recipe?.__typename !== 'Recipe') return null;
-          return <RecipeCard key={recipe.id} {...(recipe as Recipe)} />;
-        })}
-      </div>
+    <div className={styles.cardContainer}>
+      {data.recipes.map((recipe) => {
+        if (recipe?.__typename !== 'Recipe') return null;
+        return <RecipeCard key={recipe.id} {...(recipe as Recipe)} />;
+      })}
     </div>
   );
 };

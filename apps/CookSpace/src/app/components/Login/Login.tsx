@@ -6,15 +6,7 @@ import {
 import { Formik } from 'formik';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import {
-  TextField,
-  Stack,
-  ITextFieldStyles,
-  PrimaryButton,
-  Text,
-  Dialog,
-  Link,
-} from '@fluentui/react';
+import { Link, Dialog, Button, Stack, TextField } from '@mui/material';
 const Login = () => {
   const navigate = useNavigate();
   const [_, setCookie, removeCookie] = useCookies([
@@ -26,6 +18,7 @@ const Login = () => {
       console.log(data);
       if (data.login.__typename !== 'JWT') {
         removeCookie('accessToken');
+        removeCookie('refreshToken');
         return;
       }
       setCookie('accessToken', data.login.accessToken, {
@@ -39,10 +32,6 @@ const Login = () => {
       navigate('/');
     },
   });
-
-  const textFieldStyles: Partial<ITextFieldStyles> = {
-    fieldGroup: { width: 300 },
-  };
 
   return (
     <div>
@@ -88,32 +77,23 @@ const Login = () => {
             onSubmit={handleSubmit}
           >
             <Dialog
-              hidden={false}
-              dialogContentProps={{
-                title: (
-                  <Text variant="xLargePlus" style={{ fontWeight: 'bold' }}>
-                    Login
-                  </Text>
-                ),
-              }}
-              styles={{
-                main: {
-                  width: 400,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                },
+              open={true}
+              title="Login"
+              style={{
+                width: 300,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
-              <Stack tokens={{ childrenGap: 10, maxWidth: 300 }}>
+              <Stack style={{ width: 300, gap: 16 }}>
                 <TextField
                   name="email"
                   type="email"
                   label="Enter your email"
                   value={values.email}
                   onChange={handleChange}
-                  styles={textFieldStyles}
-                  errorMessage={(touched.email && errors.email) || ''}
+                  style={{ width: 300 }}
                 />
                 <TextField
                   label="Enter your password"
@@ -121,20 +101,15 @@ const Login = () => {
                   type="password"
                   value={values.password}
                   onChange={handleChange}
-                  styles={textFieldStyles}
-                  canRevealPassword
-                  revealPasswordAriaLabel="Show password"
-                  errorMessage={(touched.password && errors.password) || ''}
                 />
-                <PrimaryButton
-                  primary
+                <Button
                   type="submit"
                   onClick={() => handleSubmit()}
                   disabled={isSubmitting}
                   style={{ width: 300 }}
                 >
                   Login
-                </PrimaryButton>
+                </Button>
                 <Link href="/register">Don't have an account ?</Link>
               </Stack>
             </Dialog>

@@ -8,13 +8,19 @@
   border: 1px solid #ccc;
 }
 
-.card span,
-p {
-  text-align: left;
+.cardContent {
+  padding: 0.75rem;
   width: 100%;
 }
 
-.card span {
+.cardContent span,
+p {
+  text-align: left;
+  width: 100%;
+  margin: 0;
+}
+
+.cardContent p {
+  color: rgba(0, 0, 0, 0.65);
   font-weight: bold;
-  font-size: 1.475rem;
 }

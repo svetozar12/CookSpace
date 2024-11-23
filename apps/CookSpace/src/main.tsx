@@ -8,7 +8,6 @@ import {
   ApolloProvider,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import './styles.css';
 import App from './app/app';
 
 const root = ReactDOM.createRoot(
@@ -29,6 +28,7 @@ function getCookieValue(name: string) {
 const authLink = setContext((_, { headers }) => {
   // Get the token from local storage or any other secure place
   const token = getCookieValue('accessToken');
+  console.log(token);
   // Return the headers with the Authorization token if it exists
   return {
     headers: {

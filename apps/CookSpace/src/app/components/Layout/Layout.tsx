@@ -6,6 +6,10 @@ import { ToastContainer } from 'react-toastify';
 // styles
 import styles from './Layout.module.css';
 import 'react-toastify/dist/ReactToastify.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 interface ILayout {
   children: React.ReactNode;
